@@ -25,6 +25,8 @@ typedef void (^URBFilterControlBlock)(NSInteger selectedIndex, URBFilterControl 
 @property (nonatomic, strong) UIColor *buttonBackgroundColor;
 @property (nonatomic, strong) UIColor *buttonStrokeColor;
 
+@property (nonatomic, assign) BOOL animatesLabel;
+
 - (id)initWithTitles:(NSArray *)titles;
 - (void)setHandlerBlock:(URBFilterControlBlock)handlerBlock;
 

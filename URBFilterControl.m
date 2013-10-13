@@ -84,6 +84,7 @@ static CGSize const kURBDefaultSize = {300.0f, 70.0f};
 	_buttonStrokeWidth = 2.0;
 	_positionButton = YES;
 	_buttonPressed = NO;
+	self.animatesLabel = YES;
 	
 	self.controlButton = [URBFilterControlButton buttonWithType:UIButtonTypeCustom];
 	self.controlButton.frame = CGRectMake(0, 0, self.buttonSize, self.buttonSize);
@@ -133,8 +134,11 @@ static CGSize const kURBDefaultSize = {300.0f, 70.0f};
 	if (selectedIndex != _selectedIndex) {
 		_selectedIndex = selectedIndex;
 		[self animateButtonToIndex:selectedIndex];
-		[self animateTitleAtIndex:_selectedTitleIndex selected:NO];
-		[self animateTitleAtIndex:selectedIndex selected:YES];
+		
+		if (self.animatesLabel) {
+			[self animateTitleAtIndex:_selectedTitleIndex selected:NO];
+			[self animateTitleAtIndex:selectedIndex selected:YES];
+		}
 		
 		if (self.handlerBlock) {
 			self.handlerBlock(_selectedIndex, self);
@@ -175,9 +179,9 @@ static CGSize const kURBDefaultSize = {300.0f, 70.0f};
 - (void)drawRect:(CGRect)rect {
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	
-	UIColor *shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-	CGSize shadowOffset = CGSizeMake(0.0, 1.0);
-	CGFloat shadowBlurRadius = 2;
+//	UIColor *shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+//	CGSize shadowOffset = CGSizeMake(0.0, 1.0);
+//	CGFloat shadowBlurRadius = 2;
 
 	// bar
 	UIBezierPath *barPath = [UIBezierPath bezierPathWithRect:layout.bar];
@@ -186,28 +190,28 @@ static CGSize const kURBDefaultSize = {300.0f, 70.0f};
 	
 	// bar inner shadow
 	// point inner shadow
-	CGRect barBorderRect = CGRectInset(barPath.bounds, -shadowBlurRadius, -shadowBlurRadius);
-	barBorderRect = CGRectOffset(barBorderRect, -shadowOffset.width, -shadowOffset.height);
-	barBorderRect = CGRectInset(CGRectUnion(barBorderRect, barPath.bounds), -1, -1);
-	
-	UIBezierPath* barNegativePath = [UIBezierPath bezierPathWithRect: barBorderRect];
-	[barNegativePath appendPath: barPath];
-	barNegativePath.usesEvenOddFillRule = YES;
-	
-	CGContextSaveGState(context);
-	{
-		CGFloat xOffset = shadowOffset.width + round(barBorderRect.size.width);
-		CGFloat yOffset = shadowOffset.height;
-		CGContextSetShadowWithColor(context, CGSizeMake(xOffset + copysign(0.1, xOffset), yOffset + copysign(0.1, yOffset)),
-									shadowBlurRadius, shadowColor.CGColor);
-		
-		[barPath addClip];
-		CGAffineTransform transform = CGAffineTransformMakeTranslation(-round(barBorderRect.size.width), 0);
-		[barNegativePath applyTransform: transform];
-		[[UIColor grayColor] setFill];
-		[barNegativePath fill];
-	}
-	CGContextRestoreGState(context);
+//	CGRect barBorderRect = CGRectInset(barPath.bounds, -shadowBlurRadius, -shadowBlurRadius);
+//	barBorderRect = CGRectOffset(barBorderRect, -shadowOffset.width, -shadowOffset.height);
+//	barBorderRect = CGRectInset(CGRectUnion(barBorderRect, barPath.bounds), -1, -1);
+//	
+//	UIBezierPath* barNegativePath = [UIBezierPath bezierPathWithRect: barBorderRect];
+//	[barNegativePath appendPath: barPath];
+//	barNegativePath.usesEvenOddFillRule = YES;
+//	
+//	CGContextSaveGState(context);
+//	{
+//		CGFloat xOffset = shadowOffset.width + round(barBorderRect.size.width);
+//		CGFloat yOffset = shadowOffset.height;
+//		CGContextSetShadowWithColor(context, CGSizeMake(xOffset + copysign(0.1, xOffset), yOffset + copysign(0.1, yOffset)),
+//									shadowBlurRadius, shadowColor.CGColor);
+//		
+//		[barPath addClip];
+//		CGAffineTransform transform = CGAffineTransformMakeTranslation(-round(barBorderRect.size.width), 0);
+//		[barNegativePath applyTransform: transform];
+//		[[UIColor grayColor] setFill];
+//		[barNegativePath fill];
+//	}
+//	CGContextRestoreGState(context);
 	
 	
 	// intervals
@@ -222,28 +226,28 @@ static CGSize const kURBDefaultSize = {300.0f, 70.0f};
 		[pointPath fill];
 		
 		// point inner shadow
-		CGRect ovalBorderRect = CGRectInset(pointPath.bounds, -shadowBlurRadius, -shadowBlurRadius);
-		ovalBorderRect = CGRectOffset(ovalBorderRect, -shadowOffset.width, -shadowOffset.height);
-		ovalBorderRect = CGRectInset(CGRectUnion(ovalBorderRect, pointPath.bounds), -1, -1);
-		
-		UIBezierPath* ovalNegativePath = [UIBezierPath bezierPathWithRect: ovalBorderRect];
-		[ovalNegativePath appendPath: pointPath];
-		ovalNegativePath.usesEvenOddFillRule = YES;
-		
-		CGContextSaveGState(context);
-		{
-			CGFloat xOffset = shadowOffset.width + round(ovalBorderRect.size.width);
-			CGFloat yOffset = shadowOffset.height;
-			CGContextSetShadowWithColor(context, CGSizeMake(xOffset + copysign(0.1, xOffset), yOffset + copysign(0.1, yOffset)),
-										shadowBlurRadius, shadowColor.CGColor);
-			
-			[pointPath addClip];
-			CGAffineTransform transform = CGAffineTransformMakeTranslation(-round(ovalBorderRect.size.width), 0);
-			[ovalNegativePath applyTransform: transform];
-			[[UIColor grayColor] setFill];
-			[ovalNegativePath fill];
-		}
-		CGContextRestoreGState(context);
+//		CGRect ovalBorderRect = CGRectInset(pointPath.bounds, -shadowBlurRadius, -shadowBlurRadius);
+//		ovalBorderRect = CGRectOffset(ovalBorderRect, -shadowOffset.width, -shadowOffset.height);
+//		ovalBorderRect = CGRectInset(CGRectUnion(ovalBorderRect, pointPath.bounds), -1, -1);
+//		
+//		UIBezierPath* ovalNegativePath = [UIBezierPath bezierPathWithRect: ovalBorderRect];
+//		[ovalNegativePath appendPath: pointPath];
+//		ovalNegativePath.usesEvenOddFillRule = YES;
+//		
+//		CGContextSaveGState(context);
+//		{
+//			CGFloat xOffset = shadowOffset.width + round(ovalBorderRect.size.width);
+//			CGFloat yOffset = shadowOffset.height;
+//			CGContextSetShadowWithColor(context, CGSizeMake(xOffset + copysign(0.1, xOffset), yOffset + copysign(0.1, yOffset)),
+//										shadowBlurRadius, shadowColor.CGColor);
+//			
+//			[pointPath addClip];
+//			CGAffineTransform transform = CGAffineTransformMakeTranslation(-round(ovalBorderRect.size.width), 0);
+//			[ovalNegativePath applyTransform: transform];
+//			[[UIColor grayColor] setFill];
+//			[ovalNegativePath fill];
+//		}
+//		CGContextRestoreGState(context);
 	}];
 	CGContextRestoreGState(context);
 }
