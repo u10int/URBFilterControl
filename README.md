@@ -5,7 +5,7 @@ URBFilterControl
 
 `URBFilterControl` is a fully customizable UIControl subclass that offers an alternative method for displaying a series of filter options. This control can be used to select options that appear on a map view or within a table view listing.
 
-![Screenshot of the sample project example](https://www.dropbox.com/s/je20bweeygon469/URBFilterControl_screenshot01.gif)
+![Screenshot of the sample project example](https://dl.dropboxusercontent.com/u/197980/Screenshots/URBFilterControl_screenshot01.gif)
 
 ## Features
 
